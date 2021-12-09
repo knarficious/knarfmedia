@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'user_index' %}
+
+{% block main %}
+
+<div class="row">
+    	<div class="col">
+    		<h1>Bonjour {{ user.username }}! ✅</h1>
+    	</div>
+
+
+</div>
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section">
+        <a href="{{ path('user_change_password') }}" class="btn btn-lg btn-block btn-danger">
+            <i class="fa fa-lock" aria-hidden="true"></i> {{ 'action.change_password'|trans }}
+        </a>
+    </div>
+
+    {{ parent() }}
+
+{% endblock %}

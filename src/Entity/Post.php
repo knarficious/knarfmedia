@@ -78,15 +78,19 @@ class Post
     private $tags;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Media::class)
+     * @var Media[]|Collection
+     * 
+     * @ORM\ManyToMany(targetEntity=Media::class, cascade={"persist","remove"})
+     * @ORM\JoinTable(name="post_media") 
      */
-    private $media;
+    private $medias;
 
     public function __construct()
     {
+        $this->publishedAt = new \DateTime();
         $this->comments = new ArrayCollection();
         $this->tags = new ArrayCollection();
-        $this->media = new ArrayCollection();
+        $this->medias = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -223,15 +227,15 @@ class Post
     /**
      * @return Collection|Media[]
      */
-    public function getMedia(): Collection
+    public function getMedias(): Collection
     {
-        return $this->media;
+        return $this->medias;
     }
 
     public function addMedium(Media $medium): self
     {
-        if (!$this->media->contains($medium)) {
-            $this->media[] = $medium;
+        if (!$this->medias->contains($medium)) {
+            $this->medias[] = $medium;
         }
 
         return $this;
@@ -239,7 +243,7 @@ class Post
 
     public function removeMedium(Media $medium): self
     {
-        $this->media->removeElement($medium);
+        $this->medias->removeElement($medium);
 
         return $this;
     }

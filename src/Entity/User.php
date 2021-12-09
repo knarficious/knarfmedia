@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="user")
- * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
+ * @UniqueEntity(fields={"username"}, message="user.already_exists")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -30,6 +30,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\NotBlank()
      */
     private $username;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     */
+    private $fullname;
 
     /**
      * @ORM\Column(type="json")
@@ -199,6 +205,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->isVerified = $isVerified;
 
+        return $this;
+    }
+    
+    public function getFullname(): ?string
+    {
+        return $this->fullname;
+    }
+    
+    public function setFullname(string $fullName): self
+    {
+        $this->fullname = $fullName;
+        
         return $this;
     }
 }

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body_id 'login' %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block main %}
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="card text-center">
+                <form action="{{ path('app_login') }}" method="post">
+                    <fieldset>
+                        <legend class="card-header"><i class="fa fa-lock" aria-hidden="true"></i> {{ 'title.login'|trans }}</legend>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="username">{{ 'label.username'|trans }}</label>
+                                <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">{{ 'label.password'|trans }}</label>
+                                <input type="password" id="password" name="_password" class="form-control" />
+                            </div>
+                            <div class="py-3">                            
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-sign-in" aria-hidden="true"></i> {{ 'action.sign_in'|trans }}
+                                </button>
+                            </div>                        
+                        </div>
+                        <input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}"/>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/><div class="card-footer">                        
+                            <input type="checkbox" id="remember_me" name="_remember_me" checked/>
+        					<label for="remember_me">{{ 'remember_me.login' | trans  }}</label>                        
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

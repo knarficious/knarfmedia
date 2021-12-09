@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=TagRepository::class)
  * @ORM\Table(name="tag")
  */
-class Tag
+class Tag implements \JsonSerializable
 {
     /**
      * @ORM\Id
@@ -39,4 +39,15 @@ class Tag
 
         return $this;
     }
+    
+    public function jsonSerialize(): string
+    {
+        return $this->name;
+    }
+    
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
 }
