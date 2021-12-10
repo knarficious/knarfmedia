@@ -23,7 +23,9 @@
         {% endfor %}
 
     {% endif %}
-    {{ post.content|sanitize_html }}
+    <div class="row mt-4">
+        {{ post.content|markdown_to_html }}
+    </div>
 
     {{ include('blog/_post_tags.html.twig') }}
 
@@ -74,7 +76,7 @@
 {% block sidebar %}
     {% if is_granted('edit', post) %}
         <div class="section">
-            <a class="btn btn-lg btn-block btn-success" href="{{ path('admin_post_edit', {id: post.id}) }}">
+            <a class="btn btn-lg btn-block btn-success" href="{{ path('blog_post_edit', {id: post.id}) }}">
                 <i class="fa fa-edit" aria-hidden="true"></i> {{ 'action.edit_post'|trans }}
             </a>
         </div>

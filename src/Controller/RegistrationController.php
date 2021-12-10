@@ -53,14 +53,32 @@ class RegistrationController extends AbstractController
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-            // do anything else you need here, like send an email
+            
+            $email = $form->getData()->getEmail();
+            $this->addFlash('info', 'Un e-mail d\'activation de votre compte a été envoyé à l\'adresse: '.$email);
 
-            return $this->redirectToRoute('blog_index');
+            return $this->redirectToRoute('info_activation');
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/info-activation", name="info_activation")     
+     */
+    public function infoActivateAction()
+    {
+        
+        // Si le visiteur est déjà identifié, on le redirige
+        if ($this->isGranted('ROLE_USER'))
+        {
+            return $this->redirectToRoute('profile');
+        }
+        
+        return $this->render(
+            'registration/info_activation.html.twig');
     }
 
     /**
@@ -82,6 +100,6 @@ class RegistrationController extends AbstractController
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('blog_index');
+        return $this->redirectToRoute('app_login');
     }
 }

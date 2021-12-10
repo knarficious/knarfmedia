@@ -58,7 +58,7 @@
 
             <trans-unit id="title.homepage">
                 <source>title.homepage</source>
-                <target><![CDATA[Bienvenue sur l'application <strong>Symfony Demo</strong>]]></target>
+                <target><![CDATA[Bienvenue sur l'application <strong>Knarf Media</strong>]]></target>
             </trans-unit>
             <trans-unit id="title.source_code">
                 <source>title.source_code</source>
@@ -371,7 +371,8 @@
 
             <trans-unit id="help.app_description">
                 <source>help.app_description</source>
-                <target><![CDATA[Ceci est une <strong>application de démonstration</strong> construite avec le framework Symfony pour illustrer la façon recommandée de développer des applications Symfony.]]></target>
+                <target><![CDATA[<p>Lorem ipsum dolor sit amet. Ad odit exercitationem <strong>Eos consequatur et quisquam asperiores sed dolores eligendi</strong>. Et galisum iste id esse tenetur <em>Est voluptatibus</em>. </p><p>Eum consectetur expedita et laudantium provident ut reiciendis voluptatum qui consectetur nostrum aut suscipit quia cum nesciunt reprehenderit. Et voluptas veritatis ad dolor quidemaut odio cum Quis nobis aut sunt voluptates. Est iusto tenetur <strong>Sed voluptate ea explicabo autem et cumque libero</strong> hic deserunt quia. </p><p>Qui voluptas dolor aut beatae culpa est molestiae explicabo  illo Quis est ipsa facere. 33 dicta corporis <em>Aut nostrum</em> quo ipsa numquam in delectus quaerat. Qui necessitatibus unde aut enim quod <strong>Ut laborum ea asperiores impedit qui earum culpa et soluta iure</strong>. </p>
+]]></target>
             </trans-unit>
             <trans-unit id="help.show_code">
                 <source>help.show_code</source>
@@ -379,11 +380,11 @@
             </trans-unit>
             <trans-unit id="help.browse_app">
                 <source>help.browse_app</source>
-                <target><![CDATA[Parcourir la <strong>section publique</strong> de l'application de démonstration.]]></target>
+                <target><![CDATA[Parcourir la <strong>section publique</strong> de l'application.]]></target>
             </trans-unit>
             <trans-unit id="help.browse_admin">
                 <source>help.browse_admin</source>
-                <target><![CDATA[Parcourir l'<strong>interface d'administration</strong> de l'application de démonstration.]]></target>
+                <target><![CDATA[Parcourir l'<strong>interface d'administration</strong> de l'application.]]></target>
             </trans-unit>
             <trans-unit id="help.login_users">
                 <source>help.login_users</source>
@@ -407,7 +408,7 @@
             </trans-unit>
             <trans-unit id="help.more_information">
                 <source>help.more_information</source>
-                <target><![CDATA[Pour plus d'informations, consultez la <a href="https://symfony.com/doc">documentation de Symfony</a>.]]></target>
+                <target><![CDATA[Pour plus d'informations, consultez la <a href="">documentation</a>.]]></target>
             </trans-unit>
             <trans-unit id="help.post_summary">
                 <source>help.post_summary</source>

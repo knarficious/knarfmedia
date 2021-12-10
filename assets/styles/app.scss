@@ -360,3 +360,13 @@ body#blog_search .post-metadata {
   margin-bottom: 8px;
 }
 
+/* Weather forecast widget*/
+
+#weather-widget {
+    display: none;
+}
+
+#weather-widget.is-visible {
+	display: flex;
+}
+

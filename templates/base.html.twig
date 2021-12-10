@@ -22,7 +22,7 @@
 
         {% block header %}
             <header>
-                <nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" role="navigation">
                     <div class="container">
                             <a class="navbar-brand" href="{{ path('homepage') }}">
                                 Knarf Media
@@ -109,7 +109,7 @@
             </header>
         {% endblock %}
 
-        <div class="container body-container">
+        <div class="container body-container pt-5">
             {% block body %}
                 <div class="row">
                     <div id="main" class="col-sm-9">
@@ -125,6 +125,9 @@
                                 'sharedAge': 600,
                                 '_locale': app.request.locale
                             })) }}
+                            
+                            {{ include('weather/view.html.twig') }}
+                            <br>
                         {% endblock %}
                     </div>
                 </div>
@@ -134,20 +137,31 @@
         {% block footer %}
             <footer>
                 <div class="container">
+                	<div class="row">
+                	{% include "@msalsas_gdpr_consent_banner/msalsas_gdpr_consent_banner_widget.html.twig" %}
+                	</div>
                     <div class="row">
-                        <div id="footer-copyright" class="col-md-6">
+                        <div id="footer-copyright" class="col-md-4">
                             <p>&copy; {{ 'now'|date('Y') }} - Knarf Media</p>
                         </div>
-                        <div id="footer-resources" class="col-md-6">
+                        <div class="col-md-4">
+                        	<ul class="nav flex-column">
+                        		<li class="nav-item">
+                        			<a class="nav-link" href="{{ path('contact') }}">Contact</a>
+                        		</li>
+                        	</ul>
+                        	
+                        </div>
+                        <div id="footer-resources" class="col-md-4">
                             <p>
-                                <a href="https://twitter.com/symfony" title="Symfony Twitter">
+                                <a href="https://twitter.com/HenriThunder" title="Twitter">
                                     <i class="fa fa-twitter" aria-hidden="true"></i>
                                 </a>
-                                <a href="https://www.facebook.com/SensioLabs" title="SensioLabs Facebook">
-                                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                                <a href="https://www.linkedin.com/in/franckruer" title="Franck Ruer on LinkedIn">
+                                    <i class="fa fa-linkedin" aria-hidden="true"></i>
                                 </a>
-                                <a href="https://symfony.com/blog/" title="Symfony Blog">
-                                    <i class="fa fa-rss" aria-hidden="true"></i>
+                                <a href="https://www.youtube.com/channel/UCz-nrF4k4fRoOHQBQDK6OLQ" title="Youtube Channel">
+                                    <i class="fa fa-youtube" aria-hidden="true"></i>
                                 </a>
                             </p>
                         </div>

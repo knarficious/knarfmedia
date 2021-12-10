@@ -44,7 +44,7 @@ class Post
     private $content;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $publishedAt;
 
@@ -82,6 +82,7 @@ class Post
      * 
      * @ORM\ManyToMany(targetEntity=Media::class, cascade={"persist","remove"})
      * @ORM\JoinTable(name="post_media") 
+     * @Assert\NotNull()
      */
     private $medias;
 

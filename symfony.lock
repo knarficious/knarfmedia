@@ -161,6 +161,19 @@
     "monolog/monolog": {
         "version": "2.3.5"
     },
+    "msalsas/gdpr-consent-banner-bundle": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "24d737cb913093cdcad9d41771e9be42e2176fa2"
+        },
+        "files": [
+            "config/packages/msalsas_gdpr_consent_banner.yaml",
+            "config/routes/msalsas_gdpr_consent_banner.yaml"
+        ]
+    },
     "myclabs/deep-copy": {
         "version": "1.10.2"
     },

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    
+    {{ parent() }}
+
+{% endblock %}    
+
+{% block body_id 'registration_info' %}
+
+{% block main %}
+
+{#    {% for email in app.flashes('email') %}
+        <b>{{ email }} </b>
+    {% endfor %}    #}
+<p>
+Vérifiez votre boîte de réception (sans oublier le dossier "courrier indésirable") et cliquez sur le lien du mail pour activer votre compte. Vous pourrez alors vous connecter avec votre identifiant/e-mail et votre mot de passe.
+<p>
+    <a href="{{ path('blog_index') }}">Retour à l'accueil</a>   
+
+{% endblock %}

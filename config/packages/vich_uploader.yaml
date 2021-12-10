@@ -8,6 +8,6 @@ vich_uploader:
             upload_destination: 'default.storage'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
 
-            inject_on_load: false
+            inject_on_load: true
             delete_on_update: true
             delete_on_remove: true

@@ -5,11 +5,26 @@
 {% block main %}
 
 <div class="row">
-    	<div class="col">
-    		<h1>Bonjour {{ user.username }}! ✅</h1>
-    	</div>
-
-
+	<div class="col">
+		<h1>Bonjour {{ user.username }}! ✅</h1>
+	</div>
+</div>
+<hr>
+<div class="row">
+	{% if user.posts %}
+	<h1>Vos publications</h1>
+	{% for post in user.posts %}
+	<div class="col-md-3 mt-4">
+		<div class="card">
+			<div class="card-body">
+				<div class="card-title">
+				    <a href="{{ path('blog_post', { 'slug': post.slug }) }}">{{ post.title }}</a></div>
+				<div class="card-text">{{ post.publishedAt|format_datetime('medium', 'short', '', 'GMT+1') }}</div>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+	{% endif %}
 </div>
 {% endblock %}
 

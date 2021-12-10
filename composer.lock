@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "78b263aa726ab7b4e926c857af7c9141",
+    "content-hash": "da825b2d2d882b9bcab448ea3de72b76",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -2685,6 +2685,68 @@
                 }
             ],
             "time": "2021-10-01T21:08:31+00:00"
+        },
+        {
+            "name": "msalsas/gdpr-consent-banner-bundle",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/msalsas/MsalsasGdprConsentBannerBundle.git",
+                "reference": "370877225d0ec6666eb7a658929aa1d0df846b02"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/msalsas/MsalsasGdprConsentBannerBundle/zipball/370877225d0ec6666eb7a658929aa1d0df846b02",
+                "reference": "370877225d0ec6666eb7a658929aa1d0df846b02",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2",
+                "symfony/framework-bundle": ">=4.0",
+                "symfony/yaml": ">=4.0"
+            },
+            "conflict": {
+                "symfony/symfony": "<4.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": ">=4.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Msalsas\\GdprConsentBannerBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Manolo Salsas",
+                    "email": "manolez@gmail.com"
+                }
+            ],
+            "description": "Symfony bundle for adding a GDPR consent banner",
+            "homepage": "https://github.com/msalsas/MsalsasGdprConsentBannerBundle",
+            "keywords": [
+                "banner",
+                "consent",
+                "gdpr"
+            ],
+            "support": {
+                "issues": "https://github.com/msalsas/MsalsasGdprConsentBannerBundle/issues",
+                "source": "https://github.com/msalsas/MsalsasGdprConsentBannerBundle/tree/master"
+            },
+            "time": "2020-04-04T12:23:51+00:00"
         },
         {
             "name": "nette/schema",
@@ -7681,16 +7743,16 @@
         },
         {
             "name": "symfony/string",
-            "version": "v5.3.7",
+            "version": "v5.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "8d224396e28d30f81969f083a58763b8b9ceb0a5"
+                "reference": "d70c35bb20bbca71fc4ab7921e3c6bda1a82a60c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/8d224396e28d30f81969f083a58763b8b9ceb0a5",
-                "reference": "8d224396e28d30f81969f083a58763b8b9ceb0a5",
+                "url": "https://api.github.com/repos/symfony/string/zipball/d70c35bb20bbca71fc4ab7921e3c6bda1a82a60c",
+                "reference": "d70c35bb20bbca71fc4ab7921e3c6bda1a82a60c",
                 "shasum": ""
             },
             "require": {
@@ -7744,7 +7806,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v5.3.7"
+                "source": "https://github.com/symfony/string/tree/v5.3.10"
             },
             "funding": [
                 {
@@ -7760,7 +7822,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-08-26T08:00:08+00:00"
+            "time": "2021-10-27T18:21:46+00:00"
         },
         {
             "name": "symfony/translation",

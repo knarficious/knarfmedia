@@ -4,8 +4,10 @@
 namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Post;
+use App\Entity\Media;
 use App\Event\CommentCreatedEvent;
 use App\Form\CommentType;
+use App\Form\PostType;
 use App\Repository\PostRepository;
 use App\Repository\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
@@ -16,6 +18,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * 
@@ -68,6 +71,111 @@ class BlogController extends AbstractController
         // dump($post, $this->getUser(), new \DateTime());
         
         return $this->render('blog/post_show.html.twig', ['post' => $post]);
+    }
+    
+    /**
+     * @Route("/new", methods="GET|POST", name="blog_post_new")
+     * @param Request $request
+     * @return Response
+     */
+    public function new(Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        
+        $post = new Post();
+        $media1 = new Media();
+        $post->setAuthor($this->getUser());
+        $post->getMedias()->add($media1);
+        
+        $form = $this->createForm(PostType::class, $post)
+        ->add('saveAndCreateNew', SubmitType::class);
+        
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $data[] = $form->getData()->getMedias();
+            foreach ( $data as $media) {
+                foreach ($media as $entity){
+                    $nomMedia = $entity->getName();
+                    $media1->setName($nomMedia);
+                }
+            }
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($post);
+            $em->persist($media1);
+            //$em->persist($media2);
+            $em->flush();
+            
+            // Flash messages are used to notify the user about the result of the
+            // actions. They are deleted automatically from the session as soon
+            // as they are accessed.
+            // See https://symfony.com/doc/current/controller.html#flash-messages
+            $this->addFlash('success', 'post.created_successfully');
+            
+            if ($form->get('saveAndCreateNew')->isClicked()) {
+                return $this->redirectToRoute('blog_post_new');
+            }
+            
+            return $this->redirectToRoute('blog_post'.'/'.$post->getSlug());
+        }
+        
+        return $this->render('blog/new.html.twig', [
+            'post' => $post,
+            'form' => $form->createView(),
+        ]);
+    }
+    
+    /**
+     * Displays a form to edit an existing Post entity.
+     *
+     * @Route("/{id<\d+>}/edit", methods="GET|POST", name="blog_post_edit")
+     * @IsGranted("edit", subject="post", message="Posts can only be edited by their authors.")
+     */
+    public function edit(Request $request, Post $post): Response
+    {
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+            
+            $this->addFlash('success', 'post.updated_successfully');
+            
+            return $this->redirectToRoute('blog_post_edit', ['id' => $post->getId()]);
+        }
+        
+        return $this->render('blog/edit.html.twig', [
+            'post' => $post,
+            'form' => $form->createView(),
+        ]);
+    }
+    
+    /**
+     * Deletes a Post entity.
+     *
+     * @Route("/{id}/delete", methods="POST", name="blog_post_delete")
+     * @IsGranted("delete", subject="post")
+     */
+    public function delete(Request $request, Post $post): Response
+    {
+        if (!$this->isCsrfTokenValid('delete', $request->request->get('token'))) {
+            return $this->redirectToRoute('blog_index');
+        }
+        
+        // Delete the tags associated with this blog post. This is done automatically
+        // by Doctrine, except for SQLite (the database used in this application)
+        // because foreign key support is not enabled by default in SQLite
+        $post->getTags()->clear();
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($post);
+        $em->flush();
+        
+        $this->addFlash('success', 'post.deleted_successfully');
+        
+        return $this->redirectToRoute('blog_index');
     }
     
     /**

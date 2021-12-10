@@ -15,7 +15,7 @@ class MediaType extends AbstractType
         $builder
             ->add('mediaFile', VichFileType::class, array(
                 'label' => 'Media de la publication',
-                'required' => false,
+                'required' => true,
                 'download_link' => false,
                 'allow_delete' => true
                 ))

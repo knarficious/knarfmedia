@@ -16,6 +16,7 @@
         "league/flysystem-bundle": "^2.0",
         "league/html-to-markdown": "^5.0",
         "liip/imagine-bundle": "^2.7",
+        "msalsas/gdpr-consent-banner-bundle": "^1.0",
         "phpdocumentor/reflection-docblock": "^5.2",
         "sensio/framework-extra-bundle": "^6.1",
         "symfony/asset": "5.3.*",

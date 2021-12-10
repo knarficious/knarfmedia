@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Entity\File as EmbeddedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MediaRepository::class)
@@ -30,7 +31,20 @@ class Media
     
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     *
+     * @Assert\File(
+     * 		maxSize="10M",
+     *          maxSizeMessage="Le fichier est trop volumineux: {{size }}. La limite est {{ limit }}",
+     * 		mimeTypes={"image/png",
+     *                     "image/jpeg",
+     *                     "image/gif",
+     *                     "image/svg+xml",
+     *                     "audio/mpeg",
+     *                     "audio/ogg",
+     *                     "video/mp4",
+     *                     "video/avi",
+     *                     "video/x-msvideo"},
+     *          mimeTypesMessage="Ce type de fichier n'est pas autorisé: les types autorisés sont {{ types }}",
+     *          uploadErrorMessage="Le fichier ne peut pas etre téléchargé :-(")
      * @Vich\UploadableField(mapping="medias", fileNameProperty="media.name", size="media.size", mimeType="media.mimeType", dimensions="media.dimensions")
      *
      * @var File|null

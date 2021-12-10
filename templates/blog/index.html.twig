@@ -3,20 +3,20 @@
 {% block body_id 'blog_index' %}
 
 {% block main %}
-<div class="row row-cols-1 row-cols-md-3 g-4">
+<div class="row g-4 justify-content-center">
     {% for post in paginator.results %}
     	<div class="col rounded-pill">
         <article class="post card border-dark mb-3 h-100" style="width: 18rem;">
         	{% if post.medias %}
             {% for media in post.medias %}
             {% if media.media.name %}
-          	<img src="{{ vich_uploader_asset(media, 'mediaFile')}}" alt="{{ media.media.name }}" class="card-img-top"/>
+          	<img src="{{ vich_uploader_asset(media, 'mediaFile') }}" alt="{{ media.media.name }}" class="card-img-top"/>
           	{% elseif media.name %}
           	<img src="{{ asset('/default.storage/') }}{{ media.name }}" alt="{{ media.name }}" class="card-img-top"/>
           	{% endif %}
           	{% endfor %}
           	{% else %}          	
-          	<img alt="" src="{{ asset('images/android-1293981_640.png') }}"/>
+          	<img alt="Media" src="{{ asset('build/android-1293981_640.png') }}"/>
           	{% endif %}
           <div class="card-body">
             <h5 class="card-title">
@@ -67,6 +67,13 @@
 {% endblock %}
 
 {% block sidebar %}
+	{%  if is_granted('ROLE_USER') %}
+    <div class="section actions">
+        <a href="{{ path('blog_post_new') }}" class="btn btn-lg btn-block btn-success">
+            <i class="fa fa-plus" aria-hidden="true"></i> {{ 'action.create_post'|trans }}
+        </a>
+    </div>
+    {% endif %}
     {{ parent() }}
     
     {{ include('blog/_rss.html.twig') }}
