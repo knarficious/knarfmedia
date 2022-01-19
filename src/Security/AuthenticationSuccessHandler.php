@@ -57,7 +57,7 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
         {
             if (in_array('ROLE_ADMIN', $user->getRoles()))
             {
-                $response = new RedirectResponse('admin/post/');
+                $response = new RedirectResponse('admin/posts');
             }
             
             else 
