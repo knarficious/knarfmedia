@@ -4,6 +4,7 @@
 
 {% block main %}
 <div class="row g-4 justify-content-center">
+	{% if paginator is not empty %}
     {% for post in paginator.results %}
     	<div class="col-md-4 rounded-pill">
         <article class="post card border-dark mb-3 h-100" >
@@ -34,10 +35,10 @@
           </div>
         </article>
  		</div>
-
-    {% else %}
-        <div class="well">{{ 'post.no_posts_found'|trans }}</div>
     {% endfor %}
+    {% else %}
+    <div class="well">{{ 'post.no_posts_found'|trans }}</div>
+    {% endif %}
    </div>
     {% if paginator.hasToPaginate %}
         <div class="navigation text-center">
