@@ -145,6 +145,22 @@
                 <source>label.delete_post</source>
                 <target>Supprimer l'article</target>
             </trans-unit>
+            <trans-unit id="action.delete_comment">
+                <source>action.delete_comment</source>
+                <target>Supprimer le commentaire</target>
+            </trans-unit>
+            <trans-unit id="delete_comment_modal.title">
+                <source>delete_comment_modal.title</source>
+                <target>Êtes-vous sûr de vouloir supprimer ce commentaire ?</target>
+            </trans-unit>
+            <trans-unit id="delete_comment_modal.body">
+                <source>delete_comment_modal.body</source>
+                <target>Cette action ne peut pas être annulée.</target>
+            </trans-unit>
+            <trans-unit id="label.delete_comment">
+                <source>label.delete_comment</source>
+                <target>Supprimer le commentaire</target>
+            </trans-unit>
             <trans-unit id="label.cancel">
                 <source>label.cancel</source>
                 <target>Annuler</target>
@@ -313,7 +329,10 @@
                 <source>menu.search</source>
                 <target>Recherche</target>
             </trans-unit>
-
+            <trans-unit id="comment.deleted_successfully">
+                <source>comment.deleted_successfully</source>
+                <target>Commentaire supprimé avec succès !</target>
+            </trans-unit>
             <trans-unit id="post.to_publish_a_comment">
                 <source>post.to_publish_a_comment</source>
                 <target>pour publier un commentaire</target>
