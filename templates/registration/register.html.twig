@@ -2,15 +2,17 @@
 
 {% block title %}Register{% endblock %}
 
-{% block body %}
+{% block body_id"register" %}
+{% block main %}
     {% for flashError in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
     {% endfor %}
-
+<div class="row">
+<div class="col-sm-9">
     <div class="card">
-    	<div class="card-header">    	
-    		<h1>{{ 'action.register' | trans }}</h1>
-    	</div>
+    	<legend class="card-header text-center">
+    	<i class="fa fa-lock" aria-hidden="true"></i> {{ 'action.register' | trans }}
+    	</legend>
     	<div class="card-body">
     	{{ form_start(registrationForm) }}
         {{ form_row(registrationForm.username) }}
@@ -18,14 +20,23 @@
         {{ form_row(registrationForm.plainPassword, {
             label: 'label.password'
         }) }}
+        <div>
         {{ form_row(registrationForm.agreeTerms, {
             label: 'agree.terms'
         }) }}
-
-        <button type="submit" class="btn btn-primary"><i class="fa fa-sign-in" aria-hidden="true"></i> {{ 'action.save'|trans }}</button>
-        {{ form_end(registrationForm) }}
+        </div>
+        		
+        	<button type="submit" class="btn btn-primary"><i class="fa fa-sign-in" aria-hidden="true"></i> {{ 'action.save'|trans }}</button>
+            {{ form_end(registrationForm) }}
     	</div>
+    	
+		<div class="card-footer text-center">
+		</div>
     </div>
-
-
+</div>
+</div>
 {% endblock %}
+
+{% block sidebar %}
+{{ parent() }}
+{%  endblock %}

@@ -22,10 +22,10 @@
 
         {% block header %}
             <header>
-                <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" role="navigation">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
                     <div class="container">
                             <a class="navbar-brand" href="{{ path('homepage') }}">
-                                Knarf Media
+                                <img src="{{ asset('build/logo_.ddedb509.png') }}" alt="Knarf Media" height="36">
                             </a>
     						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                                 
@@ -118,7 +118,7 @@
                         {% block main %}{% endblock %}
                     </div>
 
-                    <div id="sidebar" class="col-sm-3">
+                    <div id="sidebar" class="col-sm-3 py-3">
                         {% block sidebar %}
                             {{ render_esi(controller('Symfony\\Bundle\\FrameworkBundle\\Controller\\TemplateController::templateAction', {
                                 'template': 'blog/about.html.twig',
@@ -136,18 +136,24 @@
 
         {% block footer %}
             <footer>
-                <div class="container">
+                <div class="container-fluid">
                 	<div class="row">
                 	{% include "@msalsas_gdpr_consent_banner/msalsas_gdpr_consent_banner_widget.html.twig" %}
                 	</div>
-                    <div class="row">
+                    <div class="row px-2">
                         <div id="footer-copyright" class="col-md-4">
                             <p>&copy; {{ 'now'|date('Y') }} - Knarf Media</p>
                         </div>
                         <div class="col-md-4">
-                        	<ul class="nav flex-column">
+                        	<ul class="nav">
                         		<li class="nav-item">
                         			<a class="nav-link" href="{{ path('contact') }}">Contact</a>
+                        		</li>
+                        		<li class="nav-item">
+                        			<a class="nav-link" href="">CGU</a>
+                        		</li>
+                        		<li class="nav-item">
+                        			<a class="nav-link" href="">Politique de confidentialité</a>
                         		</li>
                         	</ul>
                         	

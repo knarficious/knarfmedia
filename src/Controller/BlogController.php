@@ -118,7 +118,7 @@ class BlogController extends AbstractController
                 return $this->redirectToRoute('blog_post_new');
             }
             
-            return $this->redirectToRoute('blog_post'.'/'.$post->getSlug());
+            return $this->redirectToRoute('blog_post', [ 'slug' => $post->getSlug()] );
         }
         
         return $this->render('blog/new.html.twig', [
@@ -143,7 +143,7 @@ class BlogController extends AbstractController
             
             $this->addFlash('success', 'post.updated_successfully');
             
-            return $this->redirectToRoute('blog_post_edit', ['id' => $post->getId()]);
+            return $this->redirectToRoute('blog_post', ['slug' => $post->getSlug()]);
         }
         
         return $this->render('blog/edit.html.twig', [
@@ -191,6 +191,7 @@ class BlogController extends AbstractController
     {
         $comment = new Comment();
         $comment->setAuthor($this->getUser());
+        $comment->setPublishedAt(new \DateTimeImmutable());
         $post->addComment($comment);
         
         $form = $this->createForm(CommentType::class, $comment);
@@ -207,8 +208,8 @@ class BlogController extends AbstractController
             // there's no guarantee that the rest of this controller will be executed.
             // See https://symfony.com/doc/current/components/event_dispatcher.html
             $eventDispatcher->dispatch(new CommentCreatedEvent($comment));
-            
-            return $this->redirectToRoute('blog_post', ['slug' => $post->getSlug()]);
+            $this->addFlash('success', 'Commentaire publié');
+            return $this->redirect($this->generateUrl('blog_post', ['slug' => $post->getSlug()])."#comments");
         }
         
         return $this->render('blog/comment_form_error.html.twig', [

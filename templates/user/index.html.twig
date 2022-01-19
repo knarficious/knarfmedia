@@ -11,7 +11,7 @@
 </div>
 <hr>
 <div class="row">
-	{% if user.posts %}
+	{% if user.posts is not empty %}
 	<h1>Vos publications</h1>
 	{% for post in user.posts %}
 	<div class="col-md-3 mt-4">
@@ -24,6 +24,14 @@
 		</div>
 	</div>
 	{% endfor %}
+	{% else %}
+	<h4>Vous n'avez pas encore publié d'articles</h4>
+		<div class="col col-md-6">
+        <a href="{{ path('blog_post_new') }}" class="btn btn-lg btn-block btn-success">
+            <i class="fa fa-plus" aria-hidden="true"></i> {{ 'action.create_post'|trans }}
+        </a>
+		
+		</div>
 	{% endif %}
 </div>
 {% endblock %}

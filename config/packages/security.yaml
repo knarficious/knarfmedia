@@ -26,7 +26,9 @@ security:
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
                         # This allows the user to login by submitting a username and password
-            # Reference: https://symfony.com/doc/current/security/form_login_setup.html
+            # Reference: https://symfony.com/doc/current/security/form_login_setup.html            
+            pattern: ^/
+            user_checker: App\Security\UserChecker
             form_login:
                 # The route name that the login form submits to
                 check_path: app_login
@@ -38,7 +40,9 @@ security:
                 enable_csrf: true
                 # The page users are redirect to when there is no previous page stored in the
                 # session (for example when the users access directly to the login page).
-                default_target_path: homepage
+                use_referer: true
+                default_target_path: blog_index
+                success_handler: 'App\Security\AuthenticationSuccessHandler'
 
             remember_me:
                 secret:   '%kernel.secret%'
@@ -49,7 +53,9 @@ security:
                 # The route name the user can go to in order to logout
                 path: security_logout
                 # The name of the route to redirect to after logging out
-                target: homepage
+                target: homepage                
+                invalidate_session: true
+                delete_cookies: ['success_connection']                 
                 # https://symfony.com/doc/current/security/impersonating_user.html
                 # switch_user: true
 

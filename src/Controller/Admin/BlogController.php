@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\Post;
 use App\Entity\Media;
@@ -14,9 +15,11 @@ use App\Repository\PostRepository;
 use App\Security\PostVoter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Entity\Comment;
+use App\Form\CommentType;
 
 /**
-* @Route("/admin/post")
+* @Route("/admin")
 * @IsGranted("ROLE_ADMIN")
 */ 
 class BlogController extends AbstractController
@@ -25,18 +28,18 @@ class BlogController extends AbstractController
      * 
      * Liste tous les posts
      * 
-     * @Route("/", methods="GET", name="admin_index")
-     * @Route("/", methods="GET", name="admin_post_index")
+     * @Route("/posts", methods="GET", name="admin_index")
+     * @Route("/posts", methods="GET", name="admin_post_index")
      */
     public function index(PostRepository $posts): Response
     {
-        $authorPosts = $posts->findBy(['author' => $this->getUser()], ['publishedAt' => 'DESC']);
+        $authorPosts = $posts->findAll();
         
         return $this->render('admin/blog/index.html.twig', ['posts' => $authorPosts]);
     }
     
     /**
-     * @Route("/new", methods="GET|POST", name="admin_post_new")
+     * @Route("/posts/new", methods="GET|POST", name="admin_post_new")
      * @param Request $request
      * @return Response
      */
@@ -90,13 +93,13 @@ class BlogController extends AbstractController
     /**
      * Finds and displays a Post entity.
      *
-     * @Route("/{id<\d+>}", methods="GET", name="admin_post_show")
+     * @Route("/posts/{id<\d+>}", methods="GET", name="admin_post_show")
      */
     public function show(Post $post): Response
     {
         // This security check can also be performed
         // using an annotation: @IsGranted("show", subject="post", message="Posts can only be shown to their authors.")
-        $this->denyAccessUnlessGranted(PostVoter::SHOW, $post, 'Posts can only be shown to their authors.');
+        // $this->denyAccessUnlessGranted(PostVoter::SHOW, $post, 'Posts can only be shown to their authors.');
         
         return $this->render('admin/blog/show.html.twig', [
             'post' => $post,
@@ -106,7 +109,7 @@ class BlogController extends AbstractController
     /**
      * Displays a form to edit an existing Post entity.
      *
-     * @Route("/{id<\d+>}/edit", methods="GET|POST", name="admin_post_edit")
+     * @Route("/posts/{id<\d+>}/edit", methods="GET|POST", name="admin_post_edit")
      * @IsGranted("edit", subject="post", message="Posts can only be edited by their authors.")
      */
     public function edit(Request $request, Post $post): Response
@@ -131,8 +134,8 @@ class BlogController extends AbstractController
     /**
      * Deletes a Post entity.
      *
-     * @Route("/{id}/delete", methods="POST", name="admin_post_delete")
-     * @IsGranted("delete", subject="post")
+     * @Route("/posts/{id}/delete", methods="POST", name="admin_post_delete")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Post $post): Response
     {
@@ -150,6 +153,29 @@ class BlogController extends AbstractController
         $em->flush();
         
         $this->addFlash('success', 'post.deleted_successfully');
+        
+        return $this->redirectToRoute('admin_post_index');
+    }
+    
+
+    
+    /**
+     * Deletes a Comment entity.
+     *
+     * @Route("/comments/{id}/delete", methods="GET|POST", name="admin_comment_delete")
+     */
+    public function deleteComment(Request $request, Comment $comment): Response
+    {
+//         if (!$this->isCsrfTokenValid('delete', $request->request->get('token'))) {
+//             return $this->redirectToRoute('admin_post_index');
+//         }
+
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($comment);
+        $em->flush();
+        
+        $this->addFlash('success', 'commentaire supprimé');
         
         return $this->redirectToRoute('admin_post_index');
     }

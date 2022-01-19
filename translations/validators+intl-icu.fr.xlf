@@ -34,6 +34,14 @@
                 <source>user.already_exists</source>
                 <target>Il y a déjà un utilisateur enregistré avec cet identifiant</target>
             </trans-unit>
+            <trans-unit id="karser_recaptcha3.message">
+                <source>karser_recaptcha3.message</source>
+                <target>Il est possible que votre ordinateur ou votre réseau envoie des requêtes automatiques</target>
+            </trans-unit>
+            <trans-unit id="karser_recaptcha3.message_missing_value">
+                <source>karser_recaptcha3.message_missing_value</source>
+                <target>Il manque la valeur du captcha</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

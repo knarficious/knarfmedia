@@ -5,8 +5,8 @@
 {% block main %}
 <div class="row g-4 justify-content-center">
     {% for post in paginator.results %}
-    	<div class="col rounded-pill">
-        <article class="post card border-dark mb-3 h-100" style="width: 18rem;">
+    	<div class="col-md-4 rounded-pill">
+        <article class="post card border-dark mb-3 h-100" >
         	{% if post.medias %}
             {% for media in post.medias %}
             {% if media.media.name %}
@@ -16,7 +16,7 @@
           	{% endif %}
           	{% endfor %}
           	{% else %}          	
-          	<img alt="Media" src="{{ asset('build/android-1293981_640.png') }}"/>
+          	<img alt="Media" src="{{ asset('build/android-1293981_640.a8b64c6f.png') }}"/>
           	{% endif %}
           <div class="card-body">
             <h5 class="card-title">

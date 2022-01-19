@@ -38,6 +38,14 @@
                 <source>comment.is_spam</source>
                 <target>El contenido del comentario se considera spam.</target>
             </trans-unit>
+            <trans-unit id="karser_recaptcha3.message">
+                <source>karser_recaptcha3.message</source>
+                <target>'Es posible que su computadora o red esté enviando consultas automatizadas</target>
+            </trans-unit>
+            <trans-unit id="karser_recaptcha3.message_missing_value">
+                <source>karser_recaptcha3.message_missing_value</source>
+                <target>Falta el valor de captcha</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

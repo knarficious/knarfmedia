@@ -17,6 +17,7 @@
             <i class="fa fa-save" aria-hidden="true"></i> {{ 'label.create_post'|trans }}
         </button>
         {{ form_widget(form.saveAndCreateNew, {label: 'label.save_and_create_new', attr: {class: 'btn btn-primary'}}) }}
+        <a href="{{ path('user_index') }}"class="btn btn-warning" role="button">Annuler</a>
         <a href="{{ path('blog_index') }}" class="btn btn-link">
             <i class="fa fa-list-alt" aria-hidden="true"></i> {{ 'action.back_to_list'|trans }}
         </a>
@@ -25,4 +26,9 @@
 
 {% block sidebar %}
     {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    {{ encore_entry_script_tags('tempusDominus') }}
 {% endblock %}

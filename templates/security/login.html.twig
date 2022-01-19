@@ -37,9 +37,11 @@
                             </div>                        
                         </div>
                         <input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}"/>
-                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/><div class="card-footer">                        
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+                        <div class="card-footer">                        
                             <input type="checkbox" id="remember_me" name="_remember_me" checked/>
-        					<label for="remember_me">{{ 'remember_me.login' | trans  }}</label>                        
+        					<label for="remember_me">{{ 'remember_me.login' | trans  }}</label>
+        					<p><a href="{{ path('app_forgot_password_request') }}">Mot de passe perdu ?</a></p>                   
                         </div>
                     </fieldset>
                 </form>

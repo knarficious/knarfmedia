@@ -50,18 +50,17 @@ class PostType extends AbstractType
                 'label' => 'label.published_at',
                 'help' => 'help.post_publication',
             ])
-//             ->add('tags', EntityType::class, [
-//                 'class' => Tag::class,
-//                 'choice_label' => 'name',
-//                 'multiple' => true,
-//                 'attr' => ['id' => 'validationTags', 'data-allow-new' => true, 'data-allow-clear' => true],
-//                 'label' => 'label.tags',
-//                 'label_attr' => ['for'=> 'validationTags'],
-//                 'required' => false,
-            ->add('tags', TagsInputType::class, [
-                'label' => 'label.tags',
+            ->add('tags', EntityType::class, [
+                'class' => Tag::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+                'attr' => ['id' => 'post_tags', 'data-allow-new' => true, 'data-allow-clear' => true],
                 'required' => false,
-            ])
+                ])
+//             ->add('tags', TagsInputType::class, [
+//                 'label' => 'label.tags',
+//                 'required' => false,
+//             ])
             // form events let you modify information or fields at different steps
             // of the form handling process.
             // See https://symfony.com/doc/current/form/events.html

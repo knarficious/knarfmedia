@@ -51,8 +51,8 @@
     <h3>
         <i class="fa fa-comments" aria-hidden="true"></i> {{ 'post.num_comments'|trans({ 'count': post.comments|length }) }}
     </h3>
-
-    {% for comment in post.comments %}
+	<div id="comments">
+    {% for comment in post.comments|sort((a,b) => b.publishedAt <=> a.publishedAt) %}
         <div class="row post-comment">
             <a name="comment_{{ comment.id }}"></a>
             <h4 class="col-sm-3">
@@ -60,7 +60,7 @@
                 {# it's not mandatory to set the timezone in localizeddate(). This is done to
                    avoid errors when the 'intl' PHP extension is not available and the application
                    is forced to use the limited "intl polyfill", which only supports UTC and GMT #}
-                <strong>{{ comment.publishedAt|format_datetime('medium', 'short', '', 'UTC') }}</strong>
+                <strong>{{ comment.publishedAt|format_datetime('medium', 'short') }}</strong>
             </h4>
             <div class="col-sm-9">
                 {{ comment.content|sanitize_html }}
@@ -71,6 +71,7 @@
             <p>{{ 'post.no_comments'|trans }}</p>
         </div>
     {% endfor %}
+    </div>
 {% endblock %}
 
 {% block sidebar %}

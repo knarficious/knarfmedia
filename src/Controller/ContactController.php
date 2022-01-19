@@ -9,11 +9,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mailer\MailerInterface;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3Validator;
 
 class ContactController extends AbstractController
 {
     #[Route('/contact', name: 'contact')]
-    public function index(Request $request, MailerInterface $mailer): Response
+    public function index(Request $request, MailerInterface $mailer, Recaptcha3Validator $recaptcha3Validator): Response
     {
         
         $form = $this->createForm(ContactType::class);
@@ -22,6 +23,8 @@ class ContactController extends AbstractController
         
         
         if($form->isSubmitted() && $form->isValid()) {
+            
+            $score = $recaptcha3Validator->getLastResponse()->getScore();
             
             $contactFormData = $form->getData();
             
@@ -36,7 +39,7 @@ class ContactController extends AbstractController
                 
                 $this->addFlash('success', 'Your message has been sent');
                 
-                return $this->redirectToRoute('contact');
+                return $this->redirectToRoute('blog_index');
         }       
         
         
