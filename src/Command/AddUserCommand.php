@@ -85,7 +85,7 @@ class AddUserCommand extends Command
             ->addArgument('username', InputArgument::OPTIONAL, 'The username of the new user')
             ->addArgument('password', InputArgument::OPTIONAL, 'The plain password of the new user')
             ->addArgument('email', InputArgument::OPTIONAL, 'The email of the new user')
-            ->addArgument('full-name', InputArgument::OPTIONAL, 'The full name of the new user')
+            ->addArgument('is-verified', InputArgument::OPTIONAL, 'The isVerified of the new user')
             ->addOption('admin', null, InputOption::VALUE_NONE, 'If set, the user is created as an administrator')
         ;
     }
@@ -114,7 +114,7 @@ class AddUserCommand extends Command
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        if (null !== $input->getArgument('username') && null !== $input->getArgument('password') && null !== $input->getArgument('email') && null !== $input->getArgument('full-name')) {
+        if (null !== $input->getArgument('username') && null !== $input->getArgument('password') && null !== $input->getArgument('email') && null !== $input->getArgument('is-verified')) {
             return;
         }
 
@@ -155,13 +155,13 @@ class AddUserCommand extends Command
             $input->setArgument('email', $email);
         }
 
-        // Ask for the full name if it's not defined
-        $fullName = $input->getArgument('full-name');
-        if (null !== $fullName) {
-            $this->io->text(' > <info>Full Name</info>: '.$fullName);
+        // Ask for the boolean verification if it's not defined
+        $isVerified = $input->getArgument('is-verified');
+        if (null !== $isVerified) {
+            $this->io->text(' > <info>Is Verified</info>: '.$isVerified);
         } else {
-            $fullName = $this->io->ask('Full Name', null, [$this->validator, 'validateFullName']);
-            $input->setArgument('full-name', $fullName);
+            $isVerified = $this->io->ask('Full Name', null, [$this->validator, 'validateIsVerified']);
+            $input->setArgument('is-verified', $isVerified);
         }
     }
 
@@ -177,15 +177,15 @@ class AddUserCommand extends Command
         $username = $input->getArgument('username');
         $plainPassword = $input->getArgument('password');
         $email = $input->getArgument('email');
-        $fullName = $input->getArgument('full-name');
+        $isVerified = $input->getArgument('is-verified');
         $isAdmin = $input->getOption('admin');
 
         // make sure to validate the user data is correct
-        $this->validateUserData($username, $plainPassword, $email, $fullName);
+        $this->validateUserData($username, $plainPassword, $email, $isVerified);
 
         // create the user and encode its password
         $user = new User();
-        $user->setFullName($fullName);
+        $user->setIsVerified($isVerified);
         $user->setUsername($username);
         $user->setEmail($email);
         $user->setRoles([$isAdmin ? 'ROLE_ADMIN' : 'ROLE_USER']);
@@ -197,7 +197,7 @@ class AddUserCommand extends Command
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $this->io->success(sprintf('%s was successfully created: %s (%s)', $isAdmin ? 'Administrator user' : 'User', $user->getUsername(), $user->getEmail()));
+        $this->io->success(sprintf('%s was successfully created: %s (%s)', $isAdmin ? 'Administrator user' : 'User', $user->getUserIdentifier(), $user->getEmail()));
 
         $event = $stopwatch->stop('add-user-command');
         if ($output->isVerbose()) {
@@ -207,7 +207,7 @@ class AddUserCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function validateUserData($username, $plainPassword, $email, $fullName): void
+    private function validateUserData($username, $plainPassword, $email, $isVerified): void
     {
         // first check if a user with the same username already exists.
         $existingUser = $this->users->findOneBy(['username' => $username]);
@@ -219,7 +219,7 @@ class AddUserCommand extends Command
         // validate password and email if is not this input means interactive.
         $this->validator->validatePassword($plainPassword);
         $this->validator->validateEmail($email);
-        $this->validator->validateFullName($fullName);
+        $this->validator->validateIsVerified($isVerified);
 
         // check if a user with the same email already exists.
         $existingEmail = $this->users->findOneBy(['email' => $email]);
