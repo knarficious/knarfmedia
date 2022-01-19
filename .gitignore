@@ -31,3 +31,6 @@ yarn-error.log
 ###< liip/imagine-bundle ###
 /public/default.storage
 /.project
+/.buildpath
+/.settings
+
