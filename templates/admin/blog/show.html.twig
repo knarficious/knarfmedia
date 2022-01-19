@@ -50,8 +50,11 @@
                 <a href="{{ path('admin_comment_delete', {id: comment.id}) }}"><strong>{{ comment.publishedAt|format_datetime('medium', 'short') }}</strong></a>
                 
             </h4>
-            <div class="col-sm-9">
+            <div class="col-sm-6">
                 {{ comment.content|sanitize_html }}
+            </div>
+            <div class="col-sm-3">
+            {{ include('admin/blog/_delete_comment_form.html.twig', {comment: comment}, with_context = false) }}
             </div>
         </div>
     {% else %}
@@ -70,7 +73,7 @@
     </div>
 
     <div class="section">
-        {{ include('admin/blog/_delete_form.html.twig', {post: post}, with_context = false) }}
+        {{ include('admin/blog/_delete_post_form.html.twig', {post: post}, with_context = false) }}
     </div>
 
     {{ parent() }}

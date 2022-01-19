@@ -1,0 +1,8 @@
+{{ include('admin/blog/_delete_comment_confirmation.html.twig') }}
+<form action="{{ url('admin_comment_delete', {id: comment.id}) }}" method="post" data-confirmation="true" id="delete-comment-form">
+    <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
+    <button type="submit" class="btn btn-lg btn-block btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal">
+        <i class="fa fa-trash" aria-hidden="true"></i>
+        {{ 'action.delete_comment'|trans }}
+    </button>
+</form>

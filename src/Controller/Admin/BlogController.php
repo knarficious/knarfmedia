@@ -175,7 +175,7 @@ class BlogController extends AbstractController
         $em->remove($comment);
         $em->flush();
         
-        $this->addFlash('success', 'commentaire supprimé');
+        $this->addFlash('success', 'comment.deleted_successfully');
         
         return $this->redirectToRoute('admin_post_index');
     }
