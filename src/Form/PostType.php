@@ -5,7 +5,6 @@ namespace App\Form;
 use App\Entity\Post;
 use App\Entity\Tag;
 use App\Form\Type\DateTimePickerType;
-use App\Form\Type\TagsInputType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -54,13 +53,10 @@ class PostType extends AbstractType
                 'class' => Tag::class,
                 'choice_label' => 'name',
                 'multiple' => true,
-                'attr' => ['id' => 'post_tags', 'data-allow-new' => true, 'data-allow-clear' => true],
-                'required' => false,
+                'attr' => ['data-allow-new' => true, 'data-allow-clear' => true],                
+                'required' => true,
                 ])
-//             ->add('tags', TagsInputType::class, [
-//                 'label' => 'label.tags',
-//                 'required' => false,
-//             ])
+
             // form events let you modify information or fields at different steps
             // of the form handling process.
             // See https://symfony.com/doc/current/form/events.html
