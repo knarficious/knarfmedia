@@ -20,15 +20,15 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/", name="user_index")
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/", methods="GET", name="user_index")
+     * @return Response
      */
     public function index()
     {
-        $currentUser = $this->getUser();
+        $user = $this->getUser();
         
         return $this->render('user/index.html.twig', [
-            'user' => $currentUser
+            'user' => $user
         ]);
     }
     
