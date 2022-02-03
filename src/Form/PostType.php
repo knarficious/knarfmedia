@@ -53,8 +53,9 @@ class PostType extends AbstractType
                 'class' => Tag::class,
                 'choice_label' => 'name',
                 'multiple' => true,
-                'attr' => ['data-allow-new' => true, 'data-allow-clear' => true],                
-                'required' => true,
+                'attr' => ['data-allow-new' => true, 'data-allow-clear' => true, 'data-separator' => " |,"],                
+                'by_reference' => false,
+                'required' => false,
                 ])
 
             // form events let you modify information or fields at different steps

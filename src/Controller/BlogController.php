@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Post;
 use App\Entity\Media;
+use App\Entity\Tag;
 use App\Event\CommentCreatedEvent;
 use App\Form\CommentType;
 use App\Form\PostType;
@@ -15,6 +16,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Notifier\Notification\Notification;
+use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -51,6 +55,13 @@ class BlogController extends AbstractController
             'paginator' => $latestPosts,
             'tagName' => $tag ? $tag->getName() : null,
         ]);
+    }
+    
+    public function suggest(Request $request, PostRepository $posts, Tag $tag): Response
+    {
+        $posts->findBy($tag);
+        
+        return $this->render('blog/_posts_suggestions.html.twig', ['posts' => $posts]);
     }
     
     /**

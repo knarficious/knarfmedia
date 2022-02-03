@@ -45,7 +45,7 @@ class Media
      *                     "video/x-msvideo"},
      *          mimeTypesMessage="Ce type de fichier n'est pas autorisé: les types autorisés sont {{ types }}",
      *          uploadErrorMessage="Le fichier ne peut pas etre téléchargé :-(")
-     * @Vich\UploadableField(mapping="medias", fileNameProperty="name", size="size", mimeType="mimeType", dimensions="dimensions")
+     * @Vich\UploadableField(mapping="medias", fileNameProperty="name", size="media.size", mimeType="media.mimeType", dimensions="media.dimensions")
      *
      * @var File|null
      */

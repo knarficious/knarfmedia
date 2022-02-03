@@ -77,7 +77,6 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
         if ($user == $dbUser)
         {
             $email = (new TemplatedEmail())
-            ->from('knarficious74@gmail.com')
             ->to($dbUser->getEmail())
             ->subject('Vous vous êtes connecté')
             ->text('Vous vous êtes connecté aujourd\'hui avec l\'adresse IP: '.$this->getUserIpAddr().' depuis le client: '.$request->headers->get('User-Agent').'',

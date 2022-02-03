@@ -20,14 +20,13 @@
           	<img alt="Media" src="{{ asset('build/android-1293981_640.a8b64c6f.png') }}"/>
           	{% endif %}
           <div class="card-body">
-            <h5 class="card-title">
-            	<a class="card-link" href="{{ path('blog_post', {slug: post.slug}) }}">
-                    {{ post.title }}
-                </a>
+            <h5 class="card-title">            	
+                {{ post.title }}
             </h5>
             <p class="card-text">
                {{ post.summary }}</p>
             {{ include('blog/_post_tags.html.twig') }}
+            <a href="{{ path('blog_post', {slug: post.slug}) }}" class="btn btn-primary stretched-link">Lire la suite...</a>
           </div>
           <div class="post-metadata card-footer">
           	<span class="metadata"><i class="fa fa-calendar"></i> {{ post.publishedAt|format_datetime('long', 'medium', '', 'GMT+1') }}</span>

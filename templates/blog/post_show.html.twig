@@ -16,7 +16,7 @@
             {% if media.media.name %}
                 <img class="img-fluid" src="{{ vich_uploader_asset(media, 'mediaFile') }}" alt="{{ media.media.name }}" />
             {% elseif media.name %}
-            	<img class="imf-fluid" src="{{ asset('/default.storage/') }}{{ media.name }}" alt="{{ media.name }}" />
+            	<img class="img-fluid" src="{{ asset('/default.storage/') }}{{ media.name }}" alt="{{ media.name }}" />
 			{% endif %} 
 			</div>         
             </div>
