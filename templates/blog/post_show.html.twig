@@ -7,6 +7,7 @@
 
     <p class="post-metadata">
         <span class="metadata"><i class="fa fa-calendar"></i> {{ post.publishedAt|format_datetime('long', 'medium', '', 'GMT+1') }}</span>
+        {% if post.updatedAt %}<span class="metadata"><i class="fa fa-calendar"></i> mis à jour le {{ post.updatedAt|format_datetime('long', 'medium', '', 'GMT+1') }}</span>{% endif %}
         <span class="metadata"><i class="fa fa-user"></i> {{ post.author.userName }}</span>
     </p>
     {% if post.medias %}

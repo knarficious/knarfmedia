@@ -10,6 +10,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerI
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mime\Email;
 use App\Entity\User;
 use App\Repository\UserRepository;
@@ -44,6 +45,11 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
         $this->doctrine = $doctrine;
     }
     
+    /**
+     * @return RedirectResponse
+     * {@inheritDoc}
+     * @see \Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface::onAuthenticationSuccess()
+     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     { 
         $user = $token->getUser();
@@ -76,12 +82,17 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
         
         if ($user == $dbUser)
         {
-            $email = (new TemplatedEmail())
-            ->to($dbUser->getEmail())
-            ->subject('Vous vous êtes connecté')
-            ->text('Vous vous êtes connecté aujourd\'hui avec l\'adresse IP: '.$this->getUserIpAddr().' depuis le client: '.$request->headers->get('User-Agent').'',
-                'text/plain');
+            try {
+                $email = (new TemplatedEmail())
+                ->to($dbUser->getEmail())
+                ->subject('Vous vous êtes connecté')
+                ->text('Vous vous êtes connecté aujourd\'hui avec l\'adresse IP: '.$this->getUserIpAddr().' depuis le client: '.$request->headers->get('User-Agent').'',
+                    'text/plain');
                 $this->mailer->send($email);
+            } catch (TransportExceptionInterface $e) {
+                $this->addFlash('error', 'problème dans l\'envoi d\'email');
+            }           
+
         }
          return $response;
 

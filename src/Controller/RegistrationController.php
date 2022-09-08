@@ -16,6 +16,7 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Exception\ORMException;
 
 class RegistrationController extends AbstractController
 {
@@ -52,20 +53,25 @@ class RegistrationController extends AbstractController
             
             //persist
             $this->em->persist($user);
-            $this->em->flush();
-
-            // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
+            
+            try {
+                // generate a signed url and email it to the user
+                $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                    (new TemplatedEmail())
                     //->from(new Address('admin@franckruer.fr', 'Knarf Media admin'))
                     ->to($user->getEmail())
                     ->subject('Veuillez confirmer votre Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
+                    );
+                
+                $email = $form->getData()->getEmail();
+                $this->addFlash('info', 'Un e-mail d\'activation de votre compte a été envoyé à l\'adresse: '.$email);                               
+            } catch (ORMException $e) {
+                
+                $this->addFlash('error', 'Problème lors de l\'enregistrement');
+            }
+           
             
-            $email = $form->getData()->getEmail();
-            $this->addFlash('info', 'Un e-mail d\'activation de votre compte a été envoyé à l\'adresse: '.$email);
-
             return $this->redirectToRoute('app_login');
         }
 

@@ -4,10 +4,12 @@ namespace App\Entity;
 
 use App\Repository\TagRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=TagRepository::class)
  * @ORM\Table(name="tag")
+ * @UniqueEntity(fields={"name"}, errorPath="name", message="post.slug_unique")
  */
 class Tag implements \JsonSerializable
 {
@@ -42,7 +44,7 @@ class Tag implements \JsonSerializable
     
     public function jsonSerialize(): string
     {
-        return $this->name;
+        return $this->id;
     }
     
     public function __toString(): string

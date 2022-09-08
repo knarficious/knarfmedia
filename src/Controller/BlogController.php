@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * 
@@ -33,6 +34,10 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
  */
 class BlogController extends AbstractController 
 {
+    public function __construct(private ManagerRegistry $manager) {
+        
+    }
+
     /**
      * 
      * @Route("/", defaults={"page": "1", "_format"="html"}, methods="GET", name="blog_index")
@@ -150,6 +155,8 @@ class BlogController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            $post->setUpdatedAt(new \DateTimeImmutable());
             $this->getDoctrine()->getManager()->flush();
             
             $this->addFlash('success', 'post.updated_successfully');

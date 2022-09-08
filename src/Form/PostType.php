@@ -14,14 +14,17 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityManagerInterface;
 
 class PostType extends AbstractType
 {
     private $slugger;
+    private $em;
     
-    public function __construct(SluggerInterface $slugger)
+    public function __construct(SluggerInterface $slugger, EntityManagerInterface $em)
     {
         $this->slugger = $slugger;
+        $this->em = $em;
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -52,8 +55,7 @@ class PostType extends AbstractType
             ->add('tags', EntityType::class, [
                 'class' => Tag::class,
                 'choice_label' => 'name',
-                'multiple' => true,
-                'attr' => ['data-allow-new' => true, 'data-allow-clear' => true, 'data-separator' => " |,"],                
+                'multiple' => true,          
                 'by_reference' => false,
                 'required' => false,
                 ])
@@ -68,6 +70,36 @@ class PostType extends AbstractType
                     $post->setSlug($this->slugger->slug($postTitle)->lower());
                 }
             })
+             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+                 $data = $event->getData();
+                
+                 //on vérifie que le tableau enfant ne soit pas vide 
+                 if (!empty($data['tags'])) {
+                    
+                     $tags = $data['tags'];
+                    
+                     //on parcourt le tableau
+                     foreach ($tags as $tagId) {
+                        
+                         //Pour le besoin de la librairie "https://www.cssscript.com/tags-input-bootstrap-5/"
+                         // on vérifie si le tableau contient une/des valeur(s) saisies, et dans ce cas on persiste et renvoie le tableau avec les nouvelles données
+                         if (!preg_match("#^[0-9]#", $tagId)) {
+                            
+                             $tag = new Tag();
+                             $tag->setName($tagId);
+                             $this->em->persist($tag);
+                             $this->em->flush();
+                            
+                             //array_merge($tags, array($tag->getId()));
+                             $data['tags'] = array($tag->getId());
+                             //dd($data['tags']);
+                             $event->setData($data, $tags);
+                         }
+                     }                    
+                    
+                    
+                 }
+             })
             ;
     }
 

@@ -12,7 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
  * @ORM\Table(name="post")
- * @UniqueEntity(fields={"slug"}, errorPath="title", message="post.slug_unique")
+ * @UniqueEntity(fields={"title", "slug"}, errorPath="title", message="post.slug_unique")
  */
 class Post
 {
@@ -85,6 +85,11 @@ class Post
      * @Assert\NotNull()
      */
     private $medias;
+
+    /**
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $updatedAt;
 
     public function __construct()
     {
@@ -245,6 +250,18 @@ class Post
     public function removeMedium(Media $medium): self
     {
         $this->medias->removeElement($medium);
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

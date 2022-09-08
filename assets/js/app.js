@@ -80,7 +80,7 @@ $("#weather-button").on("click", function(){
 $(function() {
     // Easy Tags Input Component For Bootstrap 5/4 initialization
     // https://www.cssscript.com/tags-input-bootstrap-5/
-	Tags.init();
+	Tags.init("select", {allowClear: true, allowNew: true});
 });
 
 // Handling the modal confirmation message.
