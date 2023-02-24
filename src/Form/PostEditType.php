@@ -32,7 +32,7 @@ class PostEditType extends AbstractType
      * {@inheritDoc}
      * @see \Symfony\Component\Form\AbstractType::getParent()
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         return PostType::class;
     }

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello JeuController!{% endblock %}
+
+{% block body_id 'jeu' %}
+
+{% block main %}
+<div class="row">
+	<div class="col-md-3">
+		<form>
+		<label for="nombre" class="form-label">Choisir un nombre (entre 1 et 10):</label>
+		<input type="number" class="form-control" id="nombre" name="nombre" min="1" max="10">
+		<button class="btn btn-primary mt-3"type="button" onclick="maFonction()">Envoyer</button>
+		</form>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-3 py-3">
+		<div id="resultat"></div>
+		<br>
+        <div id="nombreAleatoire"></div>
+	</div>
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script>
+function maFonction() {
+let nombre = document.getElementById("nombre").value;
+let nombreAleatoire = Math.floor(Math.random() * 11);;
+let text;
+if (nombre == nombreAleatoire) {
+	text = "Bravo, vous avez gagné!";
+} else {
+	text = "Vous avez perdu";
+}
+document.getElementById("nombreAleatoire").innerHTML = nombreAleatoire
+document.getElementById("resultat").innerHTML = text;
+}
+</script>
+
+{% endblock %}

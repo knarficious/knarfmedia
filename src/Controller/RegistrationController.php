@@ -53,6 +53,7 @@ class RegistrationController extends AbstractController
             
             //persist
             $this->em->persist($user);
+            $this->em->flush();
             
             try {
                 // generate a signed url and email it to the user

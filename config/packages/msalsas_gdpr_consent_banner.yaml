@@ -1,9 +1,0 @@
-# See all configuration options at https://github.com/msalsas/MsalsasGdprConsentBannerBundle/blob/master/Resources/doc/index.rst
-# config/packages/msalsas_gdpr_consent_banner.yaml
-msalsas_gdpr_consent_banner:
-    css: default # [default|none]
-    has_translations: true # [true|false]
-    text_message: 'Le site utilise des cookies' # [{message}|{key}]
-    accept_message: 'Accepter' # [{message}|{key}]
-    fade_time: 2
-    time_to_expire: 30 days
