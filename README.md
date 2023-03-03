@@ -11,10 +11,9 @@ A Blog CMS
 
 ### Technologies
 Project is created with:
-* PHP: 8.0.11
-* Symfony: 5.3.13
+* PHP: 8.1.6
+* Symfony: 5.4.20
 * MySQL|PostGreSQL
-* Node.js
 * Webpack
 * Javascript
 * JQuery
@@ -28,7 +27,7 @@ Project is created with:
 
 ## Versions
 
-2.0
+1.0
 
 ## Auteur
 
