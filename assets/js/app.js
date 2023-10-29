@@ -9,7 +9,7 @@
 import '../styles/app.scss';
 import '../styles/admin.scss';
 // start the Stimulus application
-//import './bootstrap';
+import '../bootstrap';
 import 'jquery';
 import '@popperjs/core/dist/umd/popper.min.js';
 import 'typeahead.js';
@@ -28,15 +28,15 @@ $("#weather-button").on("click", function(){
 
     function success(position) {
     	const location = document.getElementById("location");
-    	const apiKey = "da6ae541c95e65f571c4274c3588cb5f";
-    	const url = "https://api.darksky.net/forecast/";
+    	const apiKey = "e14352fca5204b7bbc5212630232704";
+    	const url = "https://api.weatherapi.com/v1/current.json";
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
         console.log(latitude, longitude);
                         
         // get address by reverse geocoding
 
-        let xmlhttp = new XMLHttpRequest();
+/*        let xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 
@@ -56,17 +56,18 @@ $("#weather-button").on("click", function(){
             };
         };
     
-        xmlhttp.open("GET", "https://open.mapquestapi.com/geocoding/v1/reverse?key=4gNCAu0aZMSWHvaUaV56xvD846pUXFix&location=" + latitude + "," + longitude, true );
-        xmlhttp.send();
+        xmlhttp.open("GET", "https://mapquestapi.com/geocoding/v1/reverse?key=NEZuMk8AILPO3kN16urrDcHrfW0cddnE&location=" + latitude + "," + longitude, true );
+        xmlhttp.send();*/
     
 		// get weather forecast
 
         $.getJSON(
-                url + apiKey + "/" + latitude + "," + longitude + "?lang=fr&units=auto&callback=?",
+                url + "?key=" +  apiKey + "&q=" + latitude + "," + longitude + "&lang=fr",
                 function (data) {
-                    $("#temp").html("Température ext: " + data.currently.temperature + "°C");
-                    $("#currently").html(data.currently.summary);
-                    $("#minutely").html(data.minutely.summary);
+                    $("#temp").html("Température ext: " + data.current.temp_c + "°C");
+                    $("#currently").html(data.current.condition.text);
+                    $("#condition_icon").attr("src", data.current.condition.icon);
+                    location.innerHTML = data.location.name + ", " + data.location.country;
                 }
         );
     }
@@ -80,7 +81,7 @@ $("#weather-button").on("click", function(){
 $(function() {
     // Easy Tags Input Component For Bootstrap 5/4 initialization
     // https://www.cssscript.com/tags-input-bootstrap-5/
-	Tags.init("select[multiple]");
+	Tags.init("select", {allowClear: true, allowNew: true});
 });
 
 // Handling the modal confirmation message.

@@ -166,17 +166,17 @@ class BlogController extends AbstractController
      */
     public function deleteComment(Request $request, Comment $comment): Response
     {
-//         if (!$this->isCsrfTokenValid('delete', $request->request->get('token'))) {
-//             return $this->redirectToRoute('admin_post_index');
-//         }
+        if (!$this->isCsrfTokenValid('delete', $request->request->get('token'))) {
+            return $this->redirectToRoute('admin_post_index');
+        }
 
-        
+        $postId = $comment->getPost()->getId();
         $em = $this->getDoctrine()->getManager();
         $em->remove($comment);
         $em->flush();
         
         $this->addFlash('success', 'comment.deleted_successfully');
         
-        return $this->redirectToRoute('admin_post_index');
+        return $this->redirectToRoute('admin_post_show', ['id' => $postId]);
     }
 }

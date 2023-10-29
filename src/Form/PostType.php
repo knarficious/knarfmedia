@@ -5,7 +5,6 @@ namespace App\Form;
 use App\Entity\Post;
 use App\Entity\Tag;
 use App\Form\Type\DateTimePickerType;
-use App\Form\Type\TagsInputType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -15,14 +14,17 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityManagerInterface;
 
 class PostType extends AbstractType
 {
     private $slugger;
+    private $em;
     
-    public function __construct(SluggerInterface $slugger)
+    public function __construct(SluggerInterface $slugger, EntityManagerInterface $em)
     {
         $this->slugger = $slugger;
+        $this->em = $em;
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -53,14 +55,11 @@ class PostType extends AbstractType
             ->add('tags', EntityType::class, [
                 'class' => Tag::class,
                 'choice_label' => 'name',
-                'multiple' => true,
-                'attr' => ['id' => 'post_tags', 'data-allow-new' => true, 'data-allow-clear' => true],
+                'multiple' => true,          
+                'by_reference' => false,
                 'required' => false,
                 ])
-//             ->add('tags', TagsInputType::class, [
-//                 'label' => 'label.tags',
-//                 'required' => false,
-//             ])
+
             // form events let you modify information or fields at different steps
             // of the form handling process.
             // See https://symfony.com/doc/current/form/events.html
@@ -71,6 +70,36 @@ class PostType extends AbstractType
                     $post->setSlug($this->slugger->slug($postTitle)->lower());
                 }
             })
+             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+                 $data = $event->getData();
+                
+                 //on vérifie que le tableau enfant ne soit pas vide 
+                 if (!empty($data['tags'])) {
+                    
+                     $tags = $data['tags'];
+                    
+                     //on parcourt le tableau
+                     foreach ($tags as $tagId) {
+                        
+                         //Pour le besoin de la librairie "https://www.cssscript.com/tags-input-bootstrap-5/"
+                         // on vérifie si le tableau contient une/des valeur(s) saisies, et dans ce cas on persiste et renvoie le tableau avec les nouvelles données
+                         if (!preg_match("#^[0-9]#", $tagId)) {
+                            
+                             $tag = new Tag();
+                             $tag->setName($tagId);
+                             $this->em->persist($tag);
+                             $this->em->flush();
+                            
+                             //array_merge($tags, array($tag->getId()));
+                             $data['tags'] = array($tag->getId());
+                             //dd($data['tags']);
+                             $event->setData($data, $tags);
+                         }
+                     }                    
+                    
+                    
+                 }
+             })
             ;
     }
 

@@ -115,9 +115,6 @@
             "ref": "e5a4aa21f2e98d7440ae9aab6b56e307f99dd084"
         }
     },
-    "imagine/imagine": {
-        "version": "1.2.4"
-    },
     "jms/metadata": {
         "version": "2.5.1"
     },
@@ -163,37 +160,11 @@
     "league/uri-parser": {
         "version": "1.4.1"
     },
-    "liip/imagine-bundle": {
-        "version": "1.8",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "1.8",
-            "ref": "d1227d002b70d1a1f941d91845fcd7ac7fbfc929"
-        },
-        "files": [
-            "config/packages/liip_imagine.yaml",
-            "config/routes/liip_imagine.yaml"
-        ]
-    },
     "masterminds/html5": {
         "version": "2.7.5"
     },
     "monolog/monolog": {
         "version": "2.3.5"
-    },
-    "msalsas/gdpr-consent-banner-bundle": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "24d737cb913093cdcad9d41771e9be42e2176fa2"
-        },
-        "files": [
-            "config/packages/msalsas_gdpr_consent_banner.yaml",
-            "config/routes/msalsas_gdpr_consent_banner.yaml"
-        ]
     },
     "myclabs/deep-copy": {
         "version": "1.10.2"
@@ -329,6 +300,9 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
+    "symfony/amqp-messenger": {
+        "version": "v5.3.7"
+    },
     "symfony/apache-pack": {
         "version": "1.0",
         "recipe": {
@@ -391,6 +365,9 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v5.3.8"
+    },
+    "symfony/doctrine-messenger": {
+        "version": "v5.3.13"
     },
     "symfony/dom-crawler": {
         "version": "v5.3.7"
@@ -504,6 +481,18 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/messenger": {
+        "version": "5.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "25e3c964d3aee480b3acc3114ffb7940c89edfed"
+        },
+        "files": [
+            "config/packages/messenger.yaml"
+        ]
+    },
     "symfony/mime": {
         "version": "v5.3.8"
     },
@@ -593,6 +582,9 @@
     },
     "symfony/proxy-manager-bridge": {
         "version": "v5.3.4"
+    },
+    "symfony/redis-messenger": {
+        "version": "v5.3.13"
     },
     "symfony/routing": {
         "version": "5.3",

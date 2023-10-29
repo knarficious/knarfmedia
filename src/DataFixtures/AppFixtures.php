@@ -50,6 +50,7 @@ class AppFixtures extends Fixture
             $user->setPassword($this->passwordHasher->hashPassword($user, $password));
             $user->setEmail($email);
             $user->setRoles($roles);
+            $user->setIsVerified(true);
 
             $manager->persist($user);
             $this->addReference($username, $user);
@@ -100,7 +101,7 @@ class AppFixtures extends Fixture
 
             foreach (range(1, 5) as $i) {
                 $comment = new Comment();
-                $comment->setAuthor($this->getReference('john_user'));
+                $comment->setAuthor($this->getReference('john'));
                 $comment->setContent($this->getRandomText(random_int(255, 512)));
                 $comment->setPublishedAt(new \DateTimeImmutable('now + '.$i.'seconds'));
 
@@ -118,7 +119,7 @@ class AppFixtures extends Fixture
         return [
             // $userData = [$fullname, $username, $password, $email, $roles];
             ['Franck Ruer', 'franck', 'n00dl3', 'franckruer@orange.fr', ['ROLE_ADMIN']],
-            ['John Doe', 'john_user', 'kitten', 'leknarf@hotmail.com', ['ROLE_USER']],
+            ['John Doe', 'john', 'n00dl3', 'leknarf@hotmail.com', ['ROLE_USER']],
         ];
     }
 
@@ -149,7 +150,7 @@ class AppFixtures extends Fixture
                 $this->getPostContent(),
                 new \DateTime('now - '.$i.'days'),
                 // Ensure that the first post is written by Jane Doe to simplify tests
-                $this->getReference(['franck', 'john_user'][0 === $i ? 0 : random_int(0, 1)]),
+                $this->getReference(['franck', 'john'][0 === $i ? 0 : random_int(0, 1)]),
                 $this->getRandomTags(),
                 $this->getRandomMedium(),
             ];

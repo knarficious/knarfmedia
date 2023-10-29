@@ -10,19 +10,29 @@ class PostEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder->add('media', MediaType::class, [
+        $builder->add('medias', MediaType::class, [
             'allow_add' => true,
             'required' => true,
             'allow_delete' => true
         ]);
     }
     
+    /**
+     * @return string
+     * {@inheritDoc}
+     * @see \Symfony\Component\Form\AbstractType::getBlockPrefix()
+     */
     public function getBlockPrefix()
     {
         parent::getBlockPrefix();
     }
     
-    public function getParent()
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Symfony\Component\Form\AbstractType::getParent()
+     */
+    public function getParent(): ?string
     {
         return PostType::class;
     }

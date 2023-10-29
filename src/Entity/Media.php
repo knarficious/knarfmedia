@@ -32,7 +32,7 @@ class Media
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      * @Assert\File(
-     * 		maxSize="10M",
+     * 		maxSize="100M",
      *          maxSizeMessage="Le fichier est trop volumineux: {{size }}. La limite est {{ limit }}",
      * 		mimeTypes={"image/png",
      *                     "image/jpeg",
@@ -45,7 +45,7 @@ class Media
      *                     "video/x-msvideo"},
      *          mimeTypesMessage="Ce type de fichier n'est pas autorisé: les types autorisés sont {{ types }}",
      *          uploadErrorMessage="Le fichier ne peut pas etre téléchargé :-(")
-     * @Vich\UploadableField(mapping="medias", fileNameProperty="name", size="size", mimeType="mimeType", dimensions="dimensions")
+     * @Vich\UploadableField(mapping="medias", fileNameProperty="name", size="size", mimeType="mimeType", originalName="originalName", dimensions="dimensions")
      *
      * @var File|null
      */
@@ -77,6 +77,11 @@ class Media
      * @ORM\Column(type="array", nullable=true)
      */
     private $dimensions = [];
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $originalName = null;
     
     public function __construct()
     {
@@ -145,6 +150,18 @@ class Media
     {
         $this->dimensions = $dimensions;
 
+        return $this;
+    }
+    
+    public function getOriginalName(): ?string
+    {
+        return $this->originalName;
+    }
+    
+    public function setOriginalName(?string $originalName): self
+    {
+        $this->originalName = $originalName;
+        
         return $this;
     }
     
