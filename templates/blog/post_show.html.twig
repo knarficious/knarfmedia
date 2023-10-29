@@ -14,10 +14,25 @@
     	{% for media in post.medias %}
             <div class="row post-media justify-content-center">
             <div class="col-lg-6">
-            {% if media.media.name %}
+            {% if media.mimeType starts with 'image' %}
                 <img class="img-fluid" src="{{ vich_uploader_asset(media, 'mediaFile') }}" alt="{{ media.media.name }}" />
-            {% elseif media.name %}
-            	<img class="img-fluid" src="{{ asset('/default.storage/') }}{{ media.name }}" alt="{{ media.name }}" />
+            {% elseif media.mimeType starts with 'video' %}
+            <div id="mediatags-container" {{ stimulus_controller('mediatags') }}>
+            	<video controls class="pt-3">
+					<source id="media-source" src="{{ asset('default.storage/') }}{{media.name }}"
+					type="{{ media.mimeType }}">
+				</video>
+				<div id="mediatags"></div>
+			</div>
+			{% elseif media.mimeType starts with 'audio' %}
+            <div id="mediatags-container" {{ stimulus_controller('mediatags') }}>
+            	<img class="img-fluid" id="mediatags-image" alt="no-image" src=""/>
+            	<audio controls class="pt-3">
+					<source id="media-source" {{ stimulus_target('mediatags', 'name') }} src="{{ asset('default.storage/') }}{{media.name }}"
+					type="{{ media.mimeType }}">
+				</audio>
+				<div id="mediatags"></div>
+			</div>
 			{% endif %} 
 			</div>         
             </div>
@@ -90,3 +105,5 @@
     {{ parent() }}
     {{ include('blog/_rss.html.twig') }}
 {% endblock %}
+
+

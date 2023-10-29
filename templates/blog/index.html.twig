@@ -10,14 +10,12 @@
         <article class="post card border-dark mb-3 h-100" >
         	{% if post.medias %}
             {% for media in post.medias %}
-            {% if media.media.name %}
-          	<img src="{{ vich_uploader_asset(media, 'mediaFile') }}" alt="{{ media.media.name }}" class="card-img-top"/>
-          	{% elseif media.name %}
-          	<img src="{{ asset('/default.storage/') }}{{ media.name }}" alt="{{ media.name }}" class="card-img-top"/>
+            {% if media.mimeType starts with 'image' %}
+          	<img src="{{ vich_uploader_asset(media, 'mediaFile') }}" alt="{{ media.name }}" class="card-img-top"/>
+          	{% elseif media.mimeType starts with 'audio' or media.mimeType starts with 'video'%}
+          	<img src="{{ asset('/build/android-1293981_640.a8b64c6f.png') }}" alt="{{ media.name }}" class="card-img-top"/>
           	{% endif %}
           	{% endfor %}
-          	{% else %}          	
-          	<img alt="Media" src="{{ asset('build/android-1293981_640.a8b64c6f.png') }}"/>
           	{% endif %}
           <div class="card-body">
             <h5 class="card-title">            	
