@@ -90,7 +90,7 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
                     'text/plain');
                 $this->mailer->send($email);
             } catch (TransportExceptionInterface $e) {
-                $this->addFlash('error', 'problème dans l\'envoi d\'email');
+                $request->getSession()->getFlashBag()->add('error', 'problème dans l\'envoi d\'email');
             }           
 
         }
