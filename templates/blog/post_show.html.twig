@@ -79,7 +79,7 @@
                 <strong>{{ comment.publishedAt|format_datetime('medium', 'short') }}</strong>
             </h4>
             <div class="col-sm-9">
-                {{ comment.content|sanitize_html }}
+                {{ comment.content }}
             </div>
         </div>
     {% else %}

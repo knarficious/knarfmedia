@@ -16,20 +16,20 @@ import 'typeahead.js';
 import Tags from 'bootstrap5-tags';
 import 'bootstrap';
 
+
+
 // Weather forecast widget
 //
 $("#weather-button").on("click", function(){
 	$("#weather-widget").show();
 	$("#weather-button").hide();	
 
-	const process = $("#process");
-
     navigator.geolocation.getCurrentPosition(success, error);
 
     function success(position) {
     	const location = document.getElementById("location");
-    	const apiKey = "e14352fca5204b7bbc5212630232704";
-    	const url = "https://api.weatherapi.com/v1/current.json";
+    	const apiKey = process.env.WEATHER_APIKEY;
+    	const url = "https://api.weathermapi.com/v1/current.json";
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
         console.log(latitude, longitude);
