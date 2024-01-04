@@ -28,8 +28,8 @@ $("#weather-button").on("click", function(){
 
     function success(position) {
     	const location = document.getElementById("location");
-    	const apiKey = process.env.WEATHER_APIKEY;
-    	const url = "https://api.weathermapi.com/v1/current.json";
+//    	const apiKey = process.env.WEATHER_APIKEY;
+    	const url = "https://api.weatherapi.com/v1/current.json";
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
         console.log(latitude, longitude);
@@ -62,7 +62,7 @@ $("#weather-button").on("click", function(){
 		// get weather forecast
 
         $.getJSON(
-                url + "?key=" +  apiKey + "&q=" + latitude + "," + longitude + "&lang=fr",
+                url + "?key=e14352fca5204b7bbc5212630232704&q=" + latitude + "," + longitude + "&lang=fr",
                 function (data) {
                     $("#temp").html("Température ext: " + data.current.temp_c + "°C");
                     $("#currently").html(data.current.condition.text);
