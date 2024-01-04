@@ -14,12 +14,12 @@
           	<img src="{{ vich_uploader_asset(media, 'mediaFile') }}" alt="{{ media.name }}" class="card-img-top"/>
           	{% elseif media.mimeType starts with 'audio' %}
           	<div id="mediatags-container" {{ stimulus_controller('mediatags') }}>
-            	<img class="card-img-top" id="mediatags-image" alt="no-image" src=""/>
+            	<img class="card-img-top mediatags-image" id="mediatags-image" alt="no-image" src=""/>
             	<audio controls class="pt-3">
-					<source id="media-source" {{ stimulus_target('mediatags', 'name') }} src="{{ asset('default.storage/') }}{{media.name }}"
+					<source class="media-source" id="media-source" {{ stimulus_target('mediatags', 'name') }} src="{{ asset('default.storage/') }}{{media.name }}"
 					type="{{ media.mimeType }}">
 				</audio>
-				<div id="mediatags"></div>
+				<div class="mediatags" id="mediatags"></div>
 			</div>
           	{% endif %}
           	{% endfor %}
@@ -29,9 +29,12 @@
                 {{ post.title }}
             </h5>
             <p class="card-text">
-               {{ post.summary }}</p>
+               {{ post.summary }}
+            </p>
             {{ include('blog/_post_tags.html.twig') }}
-            <a href="{{ path('blog_post', {slug: post.slug}) }}" class="btn btn-primary stretched-link">Lire la suite...</a>
+          </div>
+          <div class="card-body">
+            <a href="{{ path('blog_post', {slug: post.slug}) }}" class="btn btn-primary stretched-link">Lire la suite...</a>          
           </div>
           <div class="post-metadata card-footer">
           	<span class="metadata"><i class="fa fa-calendar"></i> {{ post.publishedAt|format_datetime('long', 'medium', '', 'GMT+1') }}</span>
