@@ -12,8 +12,15 @@
             {% for media in post.medias %}
             {% if media.mimeType starts with 'image' %}
           	<img src="{{ vich_uploader_asset(media, 'mediaFile') }}" alt="{{ media.name }}" class="card-img-top"/>
-          	{% elseif media.mimeType starts with 'audio' or media.mimeType starts with 'video'%}
-          	<img src="{{ asset('/build/android-1293981_640.a8b64c6f.png') }}" alt="{{ media.name }}" class="card-img-top"/>
+          	{% elseif media.mimeType starts with 'audio' %}
+          	<div id="mediatags-container" {{ stimulus_controller('mediatags') }}>
+            	<img class="card-img-top" id="mediatags-image" alt="no-image" src=""/>
+            	<audio controls class="pt-3">
+					<source id="media-source" {{ stimulus_target('mediatags', 'name') }} src="{{ asset('default.storage/') }}{{media.name }}"
+					type="{{ media.mimeType }}">
+				</audio>
+				<div id="mediatags"></div>
+			</div>
           	{% endif %}
           	{% endfor %}
           	{% endif %}
