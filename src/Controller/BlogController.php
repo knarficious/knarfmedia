@@ -118,7 +118,7 @@ class BlogController extends AbstractController
                 }
             }
             
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->manager->getManager();
             $em->persist($post);
             $em->persist($media1);
             //$em->persist($media2);
@@ -157,7 +157,7 @@ class BlogController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             
             $post->setUpdatedAt(new \DateTimeImmutable());
-            $this->getDoctrine()->getManager()->flush();
+            $this->manager->getManager()->flush();
             
             $this->addFlash('success', 'post.updated_successfully');
             
@@ -187,7 +187,7 @@ class BlogController extends AbstractController
         // because foreign key support is not enabled by default in SQLite
         $post->getTags()->clear();
         
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->manager->getManager();
         $em->remove($post);
         $em->flush();
         
@@ -216,7 +216,7 @@ class BlogController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->manager->getManager();
             $em->persist($comment);
             $em->flush();
             
