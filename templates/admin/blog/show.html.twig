@@ -17,15 +17,24 @@
     {% if post.medias %}
     {% for media in post.medias %}
         <p>
-            {% if media.media.name %}
-                <img class="img-fluid" src="{{ vich_uploader_asset(media, 'mediaFile') }}" alt="{{ media.media.name }}" />
-            {% elseif media.name %}
-            	<img class="img-fluid" src="{{ asset('/default.storage/') }}{{ media.name }}" alt="{{ media.name }}"
+            {% if media.mimeType starts with "image" %}
+                <img class="img-fluid" src="{{ vich_uploader_asset(media, 'mediaFile') }}" alt="{{ media.name }}" />
             {% elseif media.mimeType starts with "video" %}
                  <video width="320" height="240" controls>
                     <source src="{{ vich_uploader_asset(media, 'mediaFile') }}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
+            {% elseif media.mimeType starts with 'audio' %}
+                <div id="mediatags-container" {{ stimulus_controller('mediatags') }}>
+                	<img class="img-fluid" id="mediatags-image" alt="no-image" src=""/>
+                	</p>
+                	<p>
+                	<audio controls class="pt-3">
+    					<source id="media-source" {{ stimulus_target('mediatags', 'name') }} src="{{ asset('default.storage/') }}{{media.name }}"
+    					type="{{ media.mimeType }}">
+    				</audio>
+    				<div id="mediatags"></div>
+    			</div>
             {% endif %}
         </p>
        {% endfor %} 
